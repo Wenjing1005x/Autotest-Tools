@@ -5,7 +5,13 @@ import os
 # environment - 可以根据需要修改
 gatewayRef1 = "XPlateform:KNX/KNX_GATEWAY-25086"
 replace = {'0:0:13':'switch8_w', '0:1:1':'switch8_r', 
-           '0:1:2':'switch14_r'}  # 可以随时扩充
+           '0:0:14':'switch14_w', '0:1:2':'switch14_r',
+           '0:0:17':'switch17_w', '0:1:5':'switch17_r',
+           '0:0:18':'switch18_w', '0:1:6':'switch18_r'
+           }  # 可以随时扩充
+dpt = {'1.001': '{{$.100.element}}', 
+       '1.002': '{{$.100.element}}'
+       } # 可以补充其它dpt子类
 
 # 全局变量，用于存储从importLogic中提取的真实ID列表
 real_ids = []
@@ -68,6 +74,12 @@ def importLogic(payload_json):
             for wire_list in node['wires']:
                 for i, wire_id in enumerate(wire_list):
                     wire_list[i] = wire_id + "{{timestamp}}"
+        
+        # 5. 处理 dataType 字段
+        if 'dataType' in node:
+            data_type_value = node['dataType']
+            if data_type_value in dpt:
+                node['dataType'] = dpt[data_type_value]
     
     # 返回修改后的JSON字符串
     return json.dumps(payload, indent=4, ensure_ascii=False)
@@ -167,6 +179,12 @@ def addLogic(payload_json):
                             if wire_id.startswith(real_id):
                                 wire_list[i] = real_id + "{{timestamp}}"
                                 break
+
+        # 处理dataType数组
+        if 'dataType' in node:
+            data_type_value = node['dataType']
+            if data_type_value in dpt:
+                node['dataType'] = dpt[data_type_value]
     
     # 4. 将修改后的rule_array转换回JSON字符串
     payload['rule'] = json.dumps(rule_array, ensure_ascii=False)
