@@ -7,10 +7,21 @@ gatewayRef1 = "XPlateform:KNX/KNX_GATEWAY-25086"
 replace = {'0:0:13':'switch8_w', '0:1:1':'switch8_r', 
            '0:0:14':'switch14_w', '0:1:2':'switch14_r',
            '0:0:17':'switch17_w', '0:1:5':'switch17_r',
-           '0:0:18':'switch18_w', '0:1:6':'switch18_r'
+           '0:0:18':'switch18_w', '0:1:6':'switch18_r',
+           '0:0:19':'switch19_w', '0:1:7':'switch19_r',
+           '0:0:20':'switch20_w', '0:1:8':'switch20_r',
+           '1:1:12':'dimControl12_w', '1:1:19':'dimAbs12_w', '1:2:10':'dimAbs12_r', '1:2:9':'dimSwitch12_r',
+           '1:1:14':'dimControl14_w', '1:1:20':'dimAbs14_w', '1:2:12':'dimAbs14_r',
+           '16:4:1':'daliDimControl1_w', '16:3:1':'daliDimControl1_r',
+           '16:4:2':'daliDimControl2_w', '16:3:2':'daliDimControl2_r'
            }  # 可以随时扩充
-dpt = {'1.001': '{{$.100.element}}', 
-       '1.002': '{{$.100.element}}'
+dpt = {#'1.001': '{{$.100.element}}', 
+       #'1.002': '{{$.100.element}}',
+       #'1.003': '{{$.100.element}}',
+       #'1.004': '{{$.100.element}}',
+       '3.007':'{{$.8.element.[0]}}',
+       '3.008':'{{$.8.element.[0]}}',
+       '5.001':''
        } # 可以补充其它dpt子类
 
 # 全局变量，用于存储从importLogic中提取的真实ID列表
